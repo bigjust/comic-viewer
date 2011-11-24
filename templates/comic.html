@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Comic Viewer</title>
+<link href="/static/cloudcomic.css" rel="stylesheet" type="text/css">
+<link href="/static/exposure.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/static/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="/static/jquery.exposure.min.js"></script>
+</head>
+<body>
+<!--Slides-->
+<a href="/">Home</a>
+<ul id="images">
+  {% for image in images %}
+    <li><a href='http://s3.amazonaws.com/comics.comic-cloud.com/{{ image }}' width="750px"></a></li>
+  {% endfor %}
+</ul>
+
+<div id="exposure"></div>
+<div class="clear"></div>
+<div id="controls"></div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+	    $(function(){
+	    $('#images').exposure(
+	        {controlsTarget : '#controls',
+	         keyboardNavigation : false,
+	         loop : false,
+	         showThumbnails : false,
+	         onImage : function(image, imageData, thumb) {
+	             $('.exposureWrapper > .exposureLastImage').stop().fadeOut(500, function() {
+	                 $(this).remove();
+	             });
+               	    image.hide().stop().fadeIn(1000);
+
+	            $( 'html, body' ).animate( { scrollTop: 0 }, 0 );
+
+	         }
+	    });
+	    });
+</script>
+</body>
+</html>

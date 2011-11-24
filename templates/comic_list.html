@@ -1,0 +1,10 @@
+<!doctype html>
+<title>Comic Viewer</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <h1>Comics</h1>
+  {% for comic in comics_list %}
+    <a href='/comic/{{ comic._id }}'><div class=flash>{{ comic.title }}</div></a>
+  {% endfor %}
+  {% block body %}{% endblock %}
+</div>
