@@ -28,7 +28,7 @@ class User(object):
         return False
 
     def get_user(self, username):
-        return users.find_one({'login': username})
+        return users.find_one({'username': username})
 
     def check_password(self, password):
         if bcrypt.hashpw(password, self.raw['password']) == self.raw['password']:
