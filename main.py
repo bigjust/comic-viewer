@@ -52,8 +52,7 @@ def view_comic(id):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        result = users.find_one({'_id': form.admin['_id']})
-        user = User(result)
+        user = User(form.admin.data)
         login_user(user)
         flash("Logged in successfully.")
 

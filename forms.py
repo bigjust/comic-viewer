@@ -1,10 +1,10 @@
-from flaskext.wtf import Form, TextField, validators
+from flaskext.wtf import Form, TextField, validators, PasswordField
 
-from db import users
+from models import User
 
 class LoginForm(Form):
     admin = TextField('Admin', [validators.Required()])
-#    password = PasswordField('Password', [])
+    password = PasswordField('Password', [])
 
     def __init__(self, *args, **kwargs):
         kwargs['csrf_enabled'] = False
@@ -16,14 +16,13 @@ class LoginForm(Form):
             return False
 
         print self.admin
-        admin = users.find_one({'login': self.admin.data})
-        if admin is None:
+        user = User(self.admin.data)
+        if user is None:
             self.admin.errors.append('Unknown admin')
             return False
 
-#        if not admin.check_password(self.password.data):
-#            self.password.errors.append('Invalid password')
-#            return False
+        if not user.check_password(self.password.data):
+           self.password.errors.append('Invalid password')
+           return False
 
-        self.admin = admin
         return True

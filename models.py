@@ -1,16 +1,19 @@
-from bson.objectid import ObjectId
+import bcrypt
 
 from db import users
 
 class User(object):
-    name = ''
-    raw = None
+    username = ''
+    raw = {}
 
-    def __init__(self, user):
-        if user:
-            self.raw = user
-            self.name = user['login']
-            self.id = user['_id']
+    def __init__(self, username):
+        if username:
+            self.username=username
+
+        self.raw = self.get_user(username)
+
+        if self.raw is None:
+            return None
 
     def is_active(self):
         return True
@@ -24,9 +27,14 @@ class User(object):
     def is_anonymous(self):
         return False
 
-    def get_user(self):
-        user = users.find_one({'login': ObjectId(id)})
-        if not user:
-            return None
+    def get_user(self, username):
+        return users.find_one({'login': username})
 
-        return user
+    def check_password(self, password):
+        if bcrypt.hashpw(password, self.raw['password']) == self.raw['password']:
+            return True
+        return False
+
+    def hash_password(self, password):
+        self.raw['password'] = bcrypt.hashpw(password, bcrypt.gensalt(log_rounds=12))
+        users.save(self.raw)
