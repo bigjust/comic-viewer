@@ -2,6 +2,7 @@ from bson.objectid import ObjectId
 from flask import Flask, render_template, flash, redirect
 from flaskext.login import LoginManager, login_required, login_user
 
+import settings
 import util
 from db import users, comics
 from models import User
@@ -61,5 +62,5 @@ def login():
 
 
 if __name__ == "__main__":
-    app.debug = True
+    app.debug = Settings.DEBUG
     app.run()
