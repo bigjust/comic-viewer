@@ -62,5 +62,5 @@ def login():
 
 
 if __name__ == "__main__":
-    app.debug = Settings.DEBUG
+    app.debug = settings.DEBUG
     app.run()
