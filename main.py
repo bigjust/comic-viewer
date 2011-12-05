@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
 from flask import Flask, render_template, flash, redirect
-from flaskext.login import LoginManager, login_required, login_user
+from flaskext.login import LoginManager, login_required, login_user, logout_user
 
 import settings
 import util
@@ -60,6 +60,11 @@ def login():
         return redirect('/')
     return render_template("login.html", form=form)
 
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect('/login')
 
 if __name__ == "__main__":
     app.debug = settings.DEBUG
