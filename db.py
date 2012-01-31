@@ -13,15 +13,19 @@ from boto.s3.key import Key
 import settings
 
 s3conn = S3Connection(settings.S3_ID, settings.S3_KEY)
-bucket = self.s3conn.create_bucket(settings.S3_BUCKET)
+bucket = s3conn.create_bucket(settings.S3_BUCKET)
 
 
 import os
 import fnmatch
+from datetime import datetime
+import zipfile
+
+connect('cloudcomic')
 
 class Comic(Document):
     meta = {'collection': 'comics'}
-    uploaded = DateTimeField(default=datetime.datetime.now)
+    uploaded = DateTimeField(default=datetime.now)
     title = StringField()
     path = StringField()
     user = StringField()
