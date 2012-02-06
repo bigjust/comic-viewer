@@ -101,8 +101,6 @@ class Importer(object):
     def addcomics(self, pattern, root, collection=""):
         for comic in self.locate(pattern, root):
             name = os.path.splitext(os.path.basename(comic))[0]
-            if collection == "":
-                collection = os.path.basename(os.path.dirname(comic))
             addComic(name,
                      comic,
                      'jcaratzas',
