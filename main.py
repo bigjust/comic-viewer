@@ -4,7 +4,7 @@ from flaskext.login import LoginManager, login_required, login_user, logout_user
 
 import settings
 import util
-from db import users, comics
+from db import users, comics, Comic
 from models import User
 from forms import LoginForm
 
@@ -47,6 +47,7 @@ def hello():
 @login_required
 def view_comic(id):
     comic = comics.find_one({'_id': ObjectId(id)})
+    Comic.objects(id=ObjectId(id)).update_one(set__read=True)
     return render_template('comic.html', images=getComicUrls(comic))
 
 @app.route("/login", methods=["GET", "POST"])
