@@ -110,11 +110,21 @@ class Importer(object):
 
 
 def main():
+    import sys
+    if (len(sys.argv) > 1):
+	path = sys.argv[1]
+    else:
+	print "need atleast a path"
+	return
+
+    if (len(sys.argv) > 2):
+	collection = ' '.join(sys.argv[2:])
+    else:
+	collection = ""
+
     importer = Importer()
-    basepath = "/home/jcaratzas/deploy/comic-cloud.com/tmp"
-    collection = "Who Is Jake Ellis"
-    importer.addcomics("*.cbr", basepath, collection)
-    importer.addcomics("*.cbz", basepath, collection)
+    importer.addcomics("*.cbr", path, collection)
+    importer.addcomics("*.cbz", path, collection)
 
 if __name__ == '__main__':
     main()
