@@ -12,10 +12,6 @@ from boto.s3.key import Key
 
 import settings
 
-s3conn = S3Connection(settings.S3_ID, settings.S3_KEY)
-bucket = s3conn.create_bucket(settings.S3_BUCKET)
-
-
 import os
 import fnmatch
 from datetime import datetime
@@ -85,6 +81,9 @@ def addComic(title, path, user, collection=""):
     new_comic.save()
 
     for pic, filename in zip(cleanfiles, generate_filenames(new_comic.id, new_comic.page_count)):
+        s3conn = S3Connection(settings.S3_ID, settings.S3_KEY)
+        bucket = s3conn.create_bucket(settings.S3_BUCKET)
+
         k = Key(bucket)
         k.key = filename
         k.set_contents_from_filename('static/users/'+user+'/'+pic, policy='public-read')
