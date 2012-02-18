@@ -25,17 +25,6 @@ def load_user(userid):
         user = User(result)
     return user
 
-# utility functions
-def getComicUrls(comic):
-    files = []
-
-    for i in range(1, comic['page_count'] + 1):
-        seq = '%(num)03d' % {'num':i}
-        filename = '%s_%s.jpg' % (str(comic['_id']), seq)
-        files.append(filename)
-
-    return files
-
 #views
 @app.route('/')
 @login_required
@@ -48,7 +37,7 @@ def hello():
 def view_comic(id):
     comic = comics.find_one({'_id': ObjectId(id)})
     Comic.objects(id=ObjectId(id)).update_one(set__read=True)
-    return render_template('comic.html', images=getComicUrls(comic))
+    return render_template('comic.html', images=comic.image_filenames)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
