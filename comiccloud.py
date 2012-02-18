@@ -3,14 +3,12 @@ from flask import Flask, render_template, flash, redirect
 from flaskext.login import LoginManager, login_required, login_user, logout_user
 
 import settings
-import util
-from db import users, comics, Comic
-from models import User
+from db import users, comics, Comic, User
 from forms import LoginForm
 
 app = Flask(__name__)
 
-app.secret_key = util.SECRET_KEY
+app.secret_key = settings.SECRET_KEY
 
 login_manager = LoginManager()
 login_manager.login_view = "login"

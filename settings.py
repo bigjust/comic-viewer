@@ -1,9 +1,12 @@
 
-#Environment Specific settings
+#Environment settings template
 
-DATABASE_NAME = 'test'
-DEBUG = True
+DEBUG = False
 
-S3_ID = "abc"
-S3_KEY = "123"
-S3_BUCKET = "sample.bucket"
+DATABASE_NAME = ''
+
+S3_ID = ''
+S3_KEY = ''
+S3_BUCKET = ''
+
+SECRET_KEY = ''
