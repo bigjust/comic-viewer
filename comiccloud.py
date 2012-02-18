@@ -33,8 +33,9 @@ def hello():
 @app.route('/comic/<id>')
 @login_required
 def view_comic(id):
-    comic = comics.find_one({'_id': ObjectId(id)})
-    Comic.objects(id=ObjectId(id)).update_one(set__read=True)
+    comic = Comic.objects(id=id).first()
+    comic.read = True
+    comic.save()
     return render_template('comic.html', images=comic.image_filenames)
 
 @app.route("/login", methods=["GET", "POST"])

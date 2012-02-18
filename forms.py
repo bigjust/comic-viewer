@@ -1,6 +1,6 @@
 from flaskext.wtf import Form, TextField, validators, PasswordField
 
-from models import User
+from db import User
 
 class LoginForm(Form):
     admin = TextField('Admin', [validators.Required()])

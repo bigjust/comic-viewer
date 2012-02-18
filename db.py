@@ -29,7 +29,7 @@ class Comic(Document):
 
         for i in range(1, self.page_count + 1):
             seq = '%(num)03d' % {'num':i}
-            filename = str(id) + '_' + seq + '.jpg'
+            filename = str(self.id) + '_' + seq + '.jpg'
             files.append(filename)
 
         return files
