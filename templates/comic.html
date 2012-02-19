@@ -5,6 +5,9 @@
 <link href="/static/exposure.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="/static/jquery-1.4.1.min.js"></script>
 <script type="text/javascript" src="/static/jquery.exposure.min.js"></script>
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
 </head>
 <body>
 <!--Slides-->
@@ -25,8 +28,12 @@
 	    $('#images').exposure(
 	        {controlsTarget : '#controls',
 	         keyboardNavigation : false,
+                 enableSlideshow : false,
 	         loop : false,
-	         showThumbnails : false,
+	         showThumbs : false,
+                 onInit : function() {
+                     this.goToPage({{ page }});
+                 },
 	         onImage : function(image, imageData, thumb) {
 	             $('.exposureWrapper > .exposureLastImage').stop().fadeOut(500, function() {
 	                 $(this).remove();
@@ -34,10 +41,15 @@
                	    image.hide().stop().fadeIn(1000);
 
 	            $( 'html, body' ).animate( { scrollTop: 0 }, 0 );
-
-	         }
+	         },
+                 onNext : function() {
+                     $.getJSON($SCRIPT_ROOT + '/bookmark', {
+                         page: this.currentPageNumber(),
+                         comic_id: '{{ comic_id }}',
+                     });
+                 }
 	    });
-	    });
+            });
 </script>
 </body>
 </html>

@@ -13,6 +13,12 @@ users = db['users']
 
 connect('cloudcomic')
 
+class Bookmark(Document):
+    meta = {'collection': 'bookmarks'}
+    user = StringField()
+    comic = StringField()
+    page = IntField(default=1)
+
 class Comic(Document):
     meta = {'collection': 'comics'}
     uploaded = DateTimeField(default=datetime.now)

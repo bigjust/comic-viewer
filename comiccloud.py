@@ -1,9 +1,9 @@
 from bson.objectid import ObjectId
-from flask import Flask, render_template, flash, redirect
+from flask import Flask, render_template, flash, redirect, request, session
 from flaskext.login import LoginManager, login_required, login_user, logout_user
 
 import settings
-from db import users, comics, Comic, User
+from db import users, comics, Comic, User, Bookmark
 from forms import LoginForm
 
 app = Flask(__name__)
@@ -36,7 +36,18 @@ def view_comic(id):
     comic = Comic.objects(id=id).first()
     comic.read = True
     comic.save()
-    return render_template('comic.html', images=comic.image_filenames)
+    bookmark, _ = Bookmark.objects.get_or_create(comic=id, user=session['user_id'])
+    return render_template('comic.html', images=comic.image_filenames, page=bookmark.page, comic_id=id)
+
+@app.route('/bookmark')
+@login_required
+def update_bookmark():
+    comic_id = request.args.get('comic_id', '', type=str)
+    page = request.args.get('page', 0, type=int)
+    bookmark, _ = Bookmark.objects.get_or_create(comic=comic_id, user=session['user_id'])
+    bookmark.page = page
+    bookmark.save()
+    return "success"
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
