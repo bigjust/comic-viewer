@@ -3,8 +3,9 @@ from flask import Flask, render_template, flash, redirect, request, session
 from flaskext.login import LoginManager, login_required, login_user, logout_user
 
 import settings
-from db import users, comics, Comic, User, Bookmark
+from db import users, Comic, User, Bookmark
 from forms import LoginForm
+from mongoengine import *
 
 app = Flask(__name__)
 
@@ -27,15 +28,24 @@ def load_user(userid):
 @app.route('/')
 @login_required
 def hello():
-    results = [comic for comic in comics.find()]
+    objects = Comic.objects.all()
+    results = []
+
+    for result in objects:
+        try:
+            Bookmark.objects.get(comic=str(result.id), user=session['user_id'])
+            result.read = True
+        except Bookmark.DoesNotExist:
+            result.read = False
+
+        results.append(result)
+
     return render_template('index.html', comics_list=results)
 
 @app.route('/comic/<id>')
 @login_required
 def view_comic(id):
     comic = Comic.objects(id=id).first()
-    comic.read = True
-    comic.save()
     bookmark, _ = Bookmark.objects.get_or_create(comic=id, user=session['user_id'])
     return render_template('comic.html', images=comic.image_filenames, page=bookmark.page, comic_id=id)
 

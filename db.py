@@ -26,7 +26,6 @@ class Comic(Document):
     path = StringField()
     user = StringField()
     page_count = IntField(default=0)
-    read = BooleanField(default=False)
     collection = StringField(default="None")
 
     @property
