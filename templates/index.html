@@ -67,9 +67,9 @@ $(document).ready(function() {
                         </td>
                         <td>{{ comic.collection }}</td>
                         {% if comic.read %}
-                        <td>unread</td>
-                        {% else %}
                         <td>read</td>
+                        {% else %}
+                        <td>unread</td>
                         {% endif %}
                    </tr>
                    {% endfor %}
