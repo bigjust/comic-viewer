@@ -33,10 +33,13 @@ def hello():
 
     for result in objects:
         try:
-            Bookmark.objects.get(comic=str(result.id), user=session['user_id'])
-            result.read = True
+            bookmark = Bookmark.objects.get(comic=str(result.id), user=session['user_id'])
+            if bookmark.page == result.page_count:
+                result.read_status = 'completed'
+            else:
+                result.read_status = 'started'
         except Bookmark.DoesNotExist:
-            result.read = False
+            result.read_status = 'unread'
 
         results.append(result)
 

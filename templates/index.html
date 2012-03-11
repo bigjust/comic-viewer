@@ -66,11 +66,7 @@ $(document).ready(function() {
                             <a href="/comic/{{ comic._id }}">{{ comic.title }}</a>
                         </td>
                         <td>{{ comic.collection }}</td>
-                        {% if comic.read %}
-                        <td>read</td>
-                        {% else %}
-                        <td>unread</td>
-                        {% endif %}
+                        <td>{{ comic.read_status }}</td>
                    </tr>
                    {% endfor %}
                 </tbody>
