@@ -4,5 +4,6 @@ Flask-WTF==0.5.2
 Jinja2==2.6
 WTForms==0.6.3
 Werkzeug==0.8.1
-pymongo==2.0.1
+pymongo==2.1.1
 py-bcrypt==0.2
+mongoengine==0.6.3

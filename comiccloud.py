@@ -1,3 +1,5 @@
+import datetime
+
 from bson.objectid import ObjectId
 from flask import Flask, render_template, flash, redirect, request, session
 from flaskext.login import LoginManager, login_required, login_user, logout_user
@@ -43,7 +45,9 @@ def hello():
 
         results.append(result)
 
-    return render_template('index.html', comics_list=results)
+    recent_comics = Comic.objects.filter(id__in=[b.comic for b in Bookmark.objects.filter(updated__exists=True).distinct('collection').only('comic').order_by('-updated')[:5]])
+
+    return render_template('index.html', comics_list=results, recent_comics=recent_comics)
 
 @app.route('/comic/<id>')
 @login_required
@@ -59,6 +63,7 @@ def update_bookmark():
     page = request.args.get('page', 0, type=int)
     bookmark, _ = Bookmark.objects.get_or_create(comic=comic_id, user=session['user_id'])
     bookmark.page = page
+    bookmark.updated = datetime.datetime.now()
     bookmark.save()
     return "success"
 

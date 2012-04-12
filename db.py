@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 
 from pymongo import Connection
 from mongoengine import *
@@ -18,10 +18,14 @@ class Bookmark(Document):
     user = StringField()
     comic = StringField()
     page = IntField(default=1)
+    updated = DateTimeField()
+
+    def __unicode__(self):
+        return "<%s> Page %s" % (self.comic, self.page)
 
 class Comic(Document):
     meta = {'collection': 'comics'}
-    uploaded = DateTimeField(default=datetime.now)
+    uploaded = DateTimeField(default=datetime.datetime.now)
     title = StringField()
     path = StringField()
     user = StringField()
