@@ -45,9 +45,9 @@ def hello():
 
         results.append(result)
 
-    recent_comics = Comic.objects.filter(id__in=[b.comic for b in Bookmark.objects.filter(updated__exists=True).distinct('collection').only('comic').order_by('-updated')[:5]])
+    recent_comics = Comic.objects.filter(id__in=[b.comic for b in Bookmark.objects.filter(updated__exists=True).only('comic').order_by('-updated')[:5]])
 
-    return render_template('index.html', comics_list=results, recent_comics=recent_comics)
+    return render_template('index.html', comics_list=results, recent=recent_comics)
 
 @app.route('/comic/<id>')
 @login_required

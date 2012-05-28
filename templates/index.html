@@ -81,12 +81,12 @@ $(document).ready(function() {
               </tr>
             </thead>
             <tbody>
-              {% for comic in recent_comics %}
+              {% for comic in recent %}
                     <tr>
                         <td {% if comic.read %} class="alt" {% endif %}>
                             <a href="/comic/{{ comic._id }}">{{ comic.title }}</a>
                         </td>
-                        <td>{{ comic.collection }}</td>
+                        <td class="recent_collection">{{ comic.collection }}</td>
                         <td>{{ comic.read_status }}</td>
                    </tr>
                {% endfor %}
