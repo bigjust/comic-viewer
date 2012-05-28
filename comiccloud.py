@@ -53,7 +53,7 @@ def hello():
 @login_required
 def view_comic(id):
     comic = Comic.objects(id=id).first()
-    bookmark, _ = Bookmark.objects.get_or_create(comic=id, user=session['user_id'])
+    bookmark, _ = Bookmark.objects.get_or_create(comic=id, user=session['user_id'], defaults={'updated': datetime.datetime.now()})
     return render_template('comic.html', images=comic.image_filenames, page=bookmark.page, comic_id=id)
 
 @app.route('/bookmark')
