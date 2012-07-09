@@ -26,20 +26,6 @@ $(document).ready(function() {
 {% block body %}
 
 <div class="container">
-    <div id="header">
-        <h1>CloudComic</h1>
-        <h3>Your DRM-free Comics Anytime, Anywhere</h3>
-    </div>
-    <div id="sidebar">
-        <ul>
-            {% if current_user.is_authenticated %}
-            <li><a href="/logout">Logout</a></li>
-            {% else %}
-            <li><a href="/register">Register</a></li>
-            <li><a href="/login">Login</a></li>
-            {% endif %}
-      </ul>
-    </div>
     <div id="content">
         <div id="comiclist">
             <table id="comics" class="display">
