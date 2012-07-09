@@ -7,7 +7,6 @@
 <link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
 <script src="/static/js/jquery-1.7.2.min.js"></script>
-<script src="/static/js/humane.min.js"></script>
 <script src="/static/js/jquery.dataTables.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 {% endblock %}
@@ -16,15 +15,17 @@
 
 {% include 'navbar.html' %}
 
-{% block body %}
+{% block messages %}
 
 {% for message in get_flashed_messages() %}
-    <script>
-        humane.log("{{ message }}");
-    </script>
-    <div class="flash">{{ message }}</div>
+  <div class="alert alert-info">
+    {{ message }}
+  </div>
 {% endfor %}
 
+{% endblock %}
+
+{% block body %}
 {% endblock %}
 </body>
 </html>
