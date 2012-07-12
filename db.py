@@ -8,7 +8,6 @@ import bcrypt
 
 connection = Connection()
 db = connection[DATABASE_NAME]
-comics = db['comics']
 users = db['users']
 
 connect(DATABASE_NAME)
