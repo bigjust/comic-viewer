@@ -11,7 +11,7 @@ db = connection[DATABASE_NAME]
 comics = db['comics']
 users = db['users']
 
-connect('cloudcomic')
+connect(DATABASE_NAME)
 
 class Bookmark(Document):
     meta = {'collection': 'bookmarks'}
